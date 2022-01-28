@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import numan.dev.videocompressor.videocompressprogresslistener.VideoCompressProgressListener;
 
 public class VideoCompressTask extends AsyncTask<Object, Float, Boolean> {
+    private String errorClass="";
+    private String errorMessage="";
     private VideoCompressor.ProgressListener mListener;
     public VideoCompressTask(VideoCompressor.ProgressListener listener) {
         mListener = listener;
@@ -20,12 +22,17 @@ public class VideoCompressTask extends AsyncTask<Object, Float, Boolean> {
 
     @Override
     protected Boolean doInBackground(Object... paths) {
-        return VideoController.getInstance().convertVideo((String)paths[0], (String)paths[1], (Integer)paths[2],(Integer)paths[3],(Integer)paths[4] , new VideoCompressProgressListener() {
-            @Override
-            public void onProgress(float percent) {
-                publishProgress(percent);
-            }
-        });
+        try {
+            return VideoController.getInstance().convertVideo((String) paths[0], (String) paths[1], (Integer) paths[2], (Integer) paths[3], (Integer) paths[4], new VideoCompressProgressListener() {
+                @Override
+                public void onProgress(float percent) {
+                    publishProgress(percent);
+                }
+            });
+        }catch (Throwable e) {
+            errorClass=e.getClass().toString();
+            return false;
+        }
     }
 
     @Override
@@ -43,7 +50,8 @@ public class VideoCompressTask extends AsyncTask<Object, Float, Boolean> {
             if (result) {
                 mListener.onFinish(true);
             } else {
-                mListener.onError("");
+                mListener.onError(errorClass);
+                errorClass="";
             }
         }
     }

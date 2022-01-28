@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import numan.dev.videocompressor.VideoCompress;
+import numan.dev.videocompressor.VideoCompressor;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -67,42 +67,42 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String destPath = tv_output.getText().toString() + File.separator + "VID_" + new SimpleDateFormat("yyyyMMdd_HHmmss", getLocale()).format(new Date()) + ".mp4";
-                VideoCompress.compressVideoLow(tv_input.getText().toString(), destPath, new VideoCompress.CompressListener() {
-                    @Override
-                    public void onStart() {
-                        tv_indicator.setText("Compressing..." + "\n"
-                                + "Start at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()));
-                        pb_compress.setVisibility(View.VISIBLE);
-                        startTime = System.currentTimeMillis();
-                        Util.writeFile(MainActivity.this, "Start at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()) + "\n");
-                    }
+                // VideoCompressor.convertVideo(tv_input.getText().toString(), destPath, new VideoCompress.CompressListener() {
+                //     @Override
+                //     public void onStart() {
+                //         tv_indicator.setText("Compressing..." + "\n"
+                //                 + "Start at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()));
+                //         pb_compress.setVisibility(View.VISIBLE);
+                //         startTime = System.currentTimeMillis();
+                //         Util.writeFile(MainActivity.this, "Start at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()) + "\n");
+                //     }
 
-                    @Override
-                    public void onSuccess() {
-                        String previous = tv_indicator.getText().toString();
-                        tv_indicator.setText(previous + "\n"
-                                + "Compress Success!" + "\n"
-                                + "End at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()));
-                        pb_compress.setVisibility(View.INVISIBLE);
-                        endTime = System.currentTimeMillis();
-                        Util.writeFile(MainActivity.this, "End at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()) + "\n");
-                        Util.writeFile(MainActivity.this, "Total: " + ((endTime - startTime)/1000) + "s" + "\n");
-                        Util.writeFile(MainActivity.this);
-                    }
+                //     @Override
+                //     public void onSuccess() {
+                //         String previous = tv_indicator.getText().toString();
+                //         tv_indicator.setText(previous + "\n"
+                //                 + "Compress Success!" + "\n"
+                //                 + "End at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()));
+                //         pb_compress.setVisibility(View.INVISIBLE);
+                //         endTime = System.currentTimeMillis();
+                //         Util.writeFile(MainActivity.this, "End at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()) + "\n");
+                //         Util.writeFile(MainActivity.this, "Total: " + ((endTime - startTime)/1000) + "s" + "\n");
+                //         Util.writeFile(MainActivity.this);
+                //     }
 
-                    @Override
-                    public void onFail() {
-                        tv_indicator.setText("Compress Failed!");
-                        pb_compress.setVisibility(View.INVISIBLE);
-                        endTime = System.currentTimeMillis();
-                        Util.writeFile(MainActivity.this, "Failed Compress!!!" + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()));
-                    }
+                //     @Override
+                //     public void onFail() {
+                //         tv_indicator.setText("Compress Failed!");
+                //         pb_compress.setVisibility(View.INVISIBLE);
+                //         endTime = System.currentTimeMillis();
+                //         Util.writeFile(MainActivity.this, "Failed Compress!!!" + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()));
+                //     }
 
-                    @Override
-                    public void onProgress(float percent) {
-                        tv_progress.setText(String.valueOf(percent) + "%");
-                    }
-                });
+                //     @Override
+                //     public void onProgress(float percent) {
+                //         tv_progress.setText(String.valueOf(percent) + "%");
+                //     }
+                // });
             }
         });
 
