@@ -320,7 +320,7 @@ public void scheduleVideoConvert(String path, String dest,int resultWidth,int re
                 extractor.setDataSource(inputFile.toString());
 
 
-                if (resultWidth != originalWidth || resultHeight != originalHeight) {
+                if (resultWidth != originalWidth || resultHeight != originalHeight || bitrate>0) {
                     int videoIndex;
                     videoIndex = selectTrack(extractor, false);
 
